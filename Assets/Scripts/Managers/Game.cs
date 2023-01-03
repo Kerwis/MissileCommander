@@ -33,6 +33,11 @@ namespace Managers
 			Instance.InternalRegisterBattleGround(battleGround);
 		}
 
+		public static void GameOver()
+		{
+			Instance.InternalGameOver();
+		}
+
 		private void Awake()
 		{
 			if(_data == null)
@@ -62,6 +67,10 @@ namespace Managers
 			battleGround.Setup(_data);
 		}
 		
+		private void InternalGameOver()
+		{
+			
+		}
 		
 		private void ExitToMenu(InputAction.CallbackContext obj)
 		{

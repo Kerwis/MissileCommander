@@ -18,7 +18,9 @@ namespace Playground
 
 		private IObjectPool<Missile> _pool;
 
-		private float timeLeft;
+		private float _timeLeft;
+
+		private bool _firing = true;
 
 		private void Start()
 		{
@@ -27,11 +29,14 @@ namespace Playground
 
 		private void Update()
 		{
-			timeLeft -= Time.deltaTime;
-			if (timeLeft <= 0)
+			if(!_firing)
+				return;
+			
+			_timeLeft -= Time.deltaTime;
+			if (_timeLeft <= 0)
 			{
 				Shot();
-				timeLeft = Random.Range(0.5f, 2f);
+				_timeLeft = Random.Range(0.5f, 2f);
 			}
 		}
 
@@ -51,6 +56,11 @@ namespace Playground
 				new Vector2(Random.Range(-BattlegroundSize.x, BattlegroundSize.x),
 					(-BattlegroundSize.y + BattlegroundOffset.y) * 2),
 				Random.Range(1, 3));
+		}
+
+		public void EndFiring()
+		{
+			_firing = false;
 		}
 	}
 }

@@ -25,6 +25,11 @@ namespace Playground
 
 			_shotAction.performed += OnShotActionPerformed;
 		}
+		
+		public void EndGame()
+		{
+			UnsubscribeFromInput();
+		}
 
 		private void OnShotActionPerformed(InputAction.CallbackContext context)
 		{
@@ -33,7 +38,7 @@ namespace Playground
 
 		private void Shot(Vector2 position)
 		{
-			if (_ammo.CanShot)
+			if (!_isDestroyed && _ammo.CanShot)
 			{
 				SpawnMissile(position);
 				_ammo.Shot();
@@ -43,10 +48,16 @@ namespace Playground
 		private void SpawnMissile(Vector2 position)
 		{
 			var missile = Instantiate(_data.MissilePrefab, transform);
-			missile.SetTarget(position - (Vector2)transform.position, _data.ShotForce);
+			var directionVector = position - (Vector2)transform.position;
+			missile.SetTarget(directionVector, _data.ShotForce);
 		}
 
 		private void OnDestroy()
+		{
+			UnsubscribeFromInput();
+		}
+
+		private void UnsubscribeFromInput()
 		{
 			if (_shotAction != null)
 				_shotAction.performed -= OnShotActionPerformed;

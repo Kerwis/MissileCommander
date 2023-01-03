@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Data;
 using Managers;
+using Playground.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -31,6 +32,12 @@ namespace Playground
 		[SerializeField]
 		private List<City> _cities;
 
+		[SerializeField]
+		private Enemy _enemy;
+
+		[SerializeField]
+		private GameUI _gameUI;
+
 		private void Awake()
 		{
 			RegisterInGame();
@@ -47,9 +54,15 @@ namespace Playground
 			SetupTower(_towerMiddle, _towerMiddleName, data);
 			SetupTower(_towerRight, _towerRightName, data, true);
 			
+			//TODO
+			_towerLeft.OnDemolishTower += () => _gameUI.LeftTowerStatus.text = "OFF";
+			_towerMiddle.OnDemolishTower += () => _gameUI.MiddleTowerStatus.text = "OFF";
+			_towerRight.OnDemolishTower += () => _gameUI.RightTowerStatus.text = "OFF";
+			
 			foreach (var city in _cities)
 			{
 				city.Setup();
+				city.OnDemolishTower += CheckCities;
 			}
 		}
 
@@ -58,6 +71,26 @@ namespace Playground
 			tower.Setup(data.ActionMap.FindAction(_aimPositionActionName),
 				data.ActionMap.FindAction(_fireActionPrefixName + towerName),
 				isSide ? data.SideTowerData : data.MiddleTowerData);
+		}
+		
+		private void CheckCities()
+		{
+			foreach (var city in _cities)
+			{
+				if(!city.IsDestroyed)
+					return;
+			}
+
+			EndGame();
+		}
+
+		private void EndGame()
+		{
+			_enemy.EndFiring();
+			_towerLeft.EndGame();
+			
+			_gameUI.GameOver();
+			Game.GameOver();
 		}
 	}
 }

@@ -11,6 +11,12 @@ namespace Playground
 		private GameObject _destroyed;
 		protected bool _isDestroyed;
 
+		public bool IsDestroyed => _isDestroyed;
+
+		public delegate void OnDemolish();
+
+		public OnDemolish OnDemolishTower;
+
 		public void Repair()
 		{
 			_isDestroyed = false;
@@ -22,10 +28,17 @@ namespace Playground
 		{
 			if (!_isDestroyed)
 			{
-				_isDestroyed = true;
-				_good.SetActive(false);
-				_destroyed.SetActive(true);
+				Demolish();
 			}
+		}
+
+		private void Demolish()
+		{
+			_isDestroyed = true;
+			_good.SetActive(false);
+			_destroyed.SetActive(true);
+			
+			OnDemolishTower?.Invoke();
 		}
 	}
 }
