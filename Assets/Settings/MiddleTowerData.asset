@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e4626e274c5455cbd1e941a6b537444, type: 3}
+  m_Name: MiddleTowerData
+  m_EditorClassIdentifier: 
+  MissilePrefab: {fileID: 2167778039418672603, guid: 88ddce08e8cc8c940acafce5bd70663e, type: 3}
+  AmmoUIPrefab: {fileID: 47351849237818019, guid: cb8baf781d3afa8418f73be92dcc16e4, type: 3}
+  AmmoCount: 10
+  MissileRows: 01000000020000000300000004000000
+  ShotForce: 10
